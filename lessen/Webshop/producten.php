@@ -1,5 +1,14 @@
 <?php
+session_start();
 require_once 'functies.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['product_id'];
+    voegToeAanWinkelmand($id);
+    header('Location: producten.php');
+    exit;
+}
+
 
 $producten = leesProducten();
 ?>
@@ -23,7 +32,10 @@ $producten = leesProducten();
 
         <p>€ <?php echo number_format($product['prijs'], 2, ',', ',' ); ?></p>
 
-    <button>Toevoegen aan winkelmand</button>
+        <form method="post">
+            <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
+            <button>Toevoegen aan winkelmand</button>
+        </form>
     </div>
 <?php endforeach; ?>
 
