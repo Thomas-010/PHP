@@ -39,10 +39,10 @@ function leesWinkelmand() {
 
 function voegToeAanWinkelmand($id) {
     if (!isset($_SESSION['winkelmand'])) {
-        $_SESSION['winkelmand'];
+        $_SESSION['winkelmand'] = [];
     }
 
-    if (isset($_SESSION['winkelmand'])) {
+    if (isset($_SESSION['winkelmand'][$id])) {
         $_SESSION['winkelmand'][$id]++;
     } else {
         $_SESSION['winkelmand'][$id] = 1;

@@ -5,10 +5,18 @@ require_once 'functies.php';
 if (isset($_POST['leeg'])) {
     leegWinkelmand();
     header('Location: winkelmand.php');
+    exit;
 }
 
+$winkelmand = leesWinkelmand();
 
+$alleProducten = leesProducten();
+$productenOpId = [];
+foreach ($alleProducten as $product) {
+    $productenOpId[$product['id']] = $product;
+}
 
+$totaal = berekenTotaal($winkelmand, $alleProducten);
 
 ?>
  
@@ -37,13 +45,30 @@ if (isset($_POST['leeg'])) {
         </tr>
 
         <!-- Hier komen later de producten uit de winkelmand -->
+        <?php if (empty($winkelmand)): ?> 
         <tr>
             <td colspan="4">Je winkelmand is nog leeg.</td>
         </tr>
+        <?php else: ?>
+            <?php foreach ($winkelmand as $id => $aantal): ?>
+                <?php
+                    $product   = $productenOpId[$id];
+                    $prijs     = (float) $product['prijs'];
+                    $subtotaal = $prijs * $aantal;
+                ?>
+                 <tr>
+                    <td><?php echo htmlspecialchars($product['naam']); ?></td>
+                    <td><?php echo $aantal; ?></td>
+                    <td>€ <?php echo number_format($prijs, 2, ',', '.'); ?></td>
+                    <td>€ <?php echo number_format($subtotaal, 2, ',', '.'); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+                    
     </table>
 
     <!-- Hier komt later de totaalregel -->
-    <p><strong>Totaal:</strong> €0,00</p>
+    <p><strong>Totaal:</strong> € <?php echo number_format($totaal, 2, ',', '.'); ?></p>
 
     <form method="post">
         <button type="submit" name="leeg">Winkelmand legen</button>
