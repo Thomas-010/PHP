@@ -10,14 +10,11 @@ function leesProducten() {
     }
 
     if (($handle = fopen($bestand, 'r')) !== false) {
-
       fgetcsv($handle, 1000, ',');
-
       while (($data = fgetcsv($handle, 1000, ',')) !== false) {
         if (count($data) < 4) {
             continue;
         }
-
           $producten[] = [
               'id' => $data[0],
               'naam' => $data[1],
@@ -70,6 +67,38 @@ function berekenTotaal($winkelmand, $producten) {
     }
 
     return $totaal;
+}
+
+function isGeldigeNaam($naam) {
+    if (empty($naam)) {
+        return false;
+    }
+    if (strlen($naam) < 2) {
+        return false;
+    }
+    
+    if (!preg_match('/^[a-zA-Z\s\-]+$/', $naam)) {
+        return false;
+    } 
+
+    return true;
+}
+
+function isGeldigEmail($email) {
+    if (empty($email)) {
+        return false;
+    } 
+
+    if (strpos($email, '@') === false) {
+        return false;
+    }
+    
+    $delen = explode('@', $email);
+    if (strpos($delen[1], '.') === false) {
+        return false;
+    }
+    
+    return true;
 }
 
 ?>

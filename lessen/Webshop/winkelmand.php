@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once 'functies.php';
 
 if (isset($_POST['leeg'])) {
