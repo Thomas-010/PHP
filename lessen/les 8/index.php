@@ -23,7 +23,7 @@
         <select id="bewerking" name="bewerking">
             <option value="optellen">Optellen</option>
             <option value="aftrekken">Aftrekken</option>
-            <option value="vermingvuldigen">Vermenigvuldigen</option>
+            <option value="vermenigvuldigen">Vermenigvuldigen</option>
             <option value="delen">Delen</option>
         </select>
         <br><br>
